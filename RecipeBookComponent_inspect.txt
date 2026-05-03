@@ -1,0 +1,283 @@
+﻿>   public static final int IMAGE_WIDTH;
+  
+>   public static final int IMAGE_HEIGHT;
+  
+    protected net.minecraft.client.gui.components.CycleButton<java.lang.Boolean> filterButton;
+  
+    protected final T menu;
+  
+    protected net.minecraft.client.Minecraft minecraft;
+  
+    public net.minecraft.client.gui.screens.recipebook.RecipeBookComponent(T, java.util.List<net.minecraft.client.gui.screens.recipebook.RecipeBookComponent$TabInfo>);
+      Code:
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object."<init>":()V
+         4: aload_0
+         5: invokestatic  #7                  // Method com/google/common/collect/Lists.newArrayList:()Ljava/util/ArrayList;
+         8: putfield      #13                 // Field tabButtons:Ljava/util/List;
+        11: aload_0
+>   public void init(int, int, net.minecraft.client.Minecraft, boolean);
+      Code:
+         0: aload_0
+         1: aload_3
+         2: putfield      #63                 // Field minecraft:Lnet/minecraft/client/Minecraft;
+         5: aload_0
+         6: iload_1
+         7: putfield      #67                 // Field width:I
+        10: aload_0
+        11: iload_2
+        12: putfield      #71                 // Field height:I
+        15: aload_0
+        16: iload         4
+>       18: putfield      #74                 // Field widthTooNarrow:Z
+        21: aload_0
+        22: aload_3
+        23: getfield      #78                 // Field net/minecraft/client/Minecraft.player:Lnet/minecraft/client/player/LocalPlayer;
+        26: invokevirtual #84                 // Method net/minecraft/client/player/LocalPlayer.getRecipeBook:()Lnet/minecraft/client/ClientRecipeBook;
+        29: putfield      #90                 // Field book:Lnet/minecraft/client/ClientRecipeBook;
+        32: aload_0
+        33: aload_3
+        34: getfield      #78                 // Field net/minecraft/client/Minecraft.player:Lnet/minecraft/client/player/LocalPlayer;
+        37: invokevirtual #94                 // Method net/minecraft/client/player/LocalPlayer.getInventory:()Lnet/minecraft/world/entity/player/Inventory;
+        40: invokevirtual #98                 // Method net/minecraft/world/entity/player/Inventory.getTimesChanged:()I
+        43: putfield      #104                // Field timesInventoryChanged:I
+        46: aload_0
+        47: aload_0
+>       48: invokevirtual #107                // Method isVisibleAccordingToBookData:()Z
+        51: putfield      #111                // Field visible:Z
+        54: aload_0
+        55: getfield      #111                // Field visible:Z
+        58: ifeq          65
+        61: aload_0
+        62: invokevirtual #114                // Method initVisuals:()V
+        65: return
+  
+    protected abstract net.minecraft.client.gui.components.WidgetSprites getFilterButtonTextures();
+  
+>   public int updateScreenPosition(int, int);
+      Code:
+         0: aload_0
+>        1: invokevirtual #358                // Method isVisible:()Z
+         4: ifeq          31
+         7: aload_0
+>        8: getfield      #74                 // Field widthTooNarrow:Z
+        11: ifne          31
+        14: sipush        177
+        17: iload_1
+        18: iload_2
+        19: isub
+        20: sipush        200
+        23: isub
+        24: iconst_2
+        25: idiv
+        26: iadd
+        27: istore_3
+        28: goto          37
+        31: iload_1
+        32: iload_2
+        33: isub
+>        2: invokevirtual #358                // Method isVisible:()Z
+         5: ifne          12
+         8: iconst_1
+         9: goto          13
+        12: iconst_0
+        13: invokevirtual #361                // Method setVisible:(Z)V
+        16: return
+  
+>   public boolean isVisible();
+      Code:
+         0: aload_0
+         1: getfield      #111                // Field visible:Z
+         4: ireturn
+  
+    protected void setVisible(boolean);
+      Code:
+         0: iload_1
+         1: ifeq          8
+         4: aload_0
+         5: invokevirtual #114                // Method initVisuals:()V
+         8: aload_0
+         9: iload_1
+        10: putfield      #111                // Field visible:Z
+        13: aload_0
+>       25: invokevirtual #358                // Method isVisible:()Z
+        28: ifeq          35
+        31: aload_0
+        32: invokevirtual #391                // Method updateStackedContents:()V
+        35: return
+  
+    protected abstract void selectMatchingRecipes(net.minecraft.client.gui.screens.recipebook.RecipeCollection, net.minecraft.world.entity.player.StackedItemContents);
+  
+    public void tick();
+      Code:
+         0: aload_0
+>        1: invokevirtual #107                // Method isVisibleAccordingToBookData:()Z
+         4: istore_1
+         5: aload_0
+>        6: invokevirtual #358                // Method isVisible:()Z
+         9: iload_1
+        10: if_icmpeq     18
+        13: aload_0
+        14: iload_1
+        15: invokevirtual #361                // Method setVisible:(Z)V
+        18: aload_0
+>       19: invokevirtual #358                // Method isVisible:()Z
+        22: ifne          26
+        25: return
+        26: aload_0
+        27: getfield      #104                // Field timesInventoryChanged:I
+        30: aload_0
+        31: getfield      #63                 // Field minecraft:Lnet/minecraft/client/Minecraft;
+        34: getfield      #78                 // Field net/minecraft/client/Minecraft.player:Lnet/minecraft/client/player/LocalPlayer;
+        37: invokevirtual #94                 // Method net/minecraft/client/player/LocalPlayer.getInventory:()Lnet/minecraft/world/entity/player/Inventory;
+        40: invokevirtual #98                 // Method net/minecraft/world/entity/player/Inventory.getTimesChanged:()I
+        43: if_icmpeq     67
+        46: aload_0
+        47: invokevirtual #391                // Method updateStackedContents:()V
+        50: aload_0
+        51: aload_0
+        52: getfield      #63                 // Field minecraft:Lnet/minecraft/client/Minecraft;
+>        1: invokevirtual #358                // Method isVisible:()Z
+         4: ifne          8
+         7: return
+         8: aload_0
+         9: getfield      #63                 // Field minecraft:Lnet/minecraft/client/Minecraft;
+        12: invokevirtual #486                // Method net/minecraft/client/Minecraft.hasControlDown:()Z
+        15: ifne          29
+        18: aload_0
+        19: dup
+        20: getfield      #489                // Field time:F
+        23: fload         4
+        25: fadd
+        26: putfield      #489                // Field time:F
+        29: aload_0
+        30: invokevirtual #123                // Method getXOrigin:()I
+        33: istore        5
+>        1: invokevirtual #358                // Method isVisible:()Z
+         4: ifne          8
+         7: return
+         8: aload_0
+         9: getfield      #59                 // Field recipeBookPage:Lnet/minecraft/client/gui/screens/recipebook/RecipeBookPage;
+        12: aload_1
+        13: iload_2
+        14: iload_3
+        15: invokevirtual #518                // Method net/minecraft/client/gui/screens/recipebook/RecipeBookPage.extractTooltip:(Lnet/minecraft/client/gui/GuiGraphicsExtractor;II)V
+        18: aload_0
+        19: getfield      #48                 // Field ghostSlots:Lnet/minecraft/client/gui/screens/recipebook/GhostSlots;
+        22: aload_1
+        23: aload_0
+        24: getfield      #63                 // Field minecraft:Lnet/minecraft/client/Minecraft;
+        27: iload_2
+        28: iload_3
+>        1: invokevirtual #358                // Method isVisible:()Z
+         4: ifeq          20
+         7: aload_0
+         8: getfield      #63                 // Field minecraft:Lnet/minecraft/client/Minecraft;
+        11: getfield      #78                 // Field net/minecraft/client/Minecraft.player:Lnet/minecraft/client/player/LocalPlayer;
+        14: invokevirtual #528                // Method net/minecraft/client/player/LocalPlayer.isSpectator:()Z
+        17: ifeq          22
+        20: iconst_0
+        21: ireturn
+        22: aload_0
+        23: getfield      #59                 // Field recipeBookPage:Lnet/minecraft/client/gui/screens/recipebook/RecipeBookPage;
+        26: aload_1
+        27: aload_0
+        28: invokevirtual #123                // Method getXOrigin:()I
+        31: aload_0
+        32: invokevirtual #126                // Method getYOrigin:()I
+>        1: invokevirtual #358                // Method isVisible:()Z
+         4: ifne          9
+         7: iconst_1
+         8: ireturn
+         9: dload_1
+        10: iload         5
+        12: i2d
+        13: dcmpg
+        14: iflt          47
+        17: dload_3
+        18: iload         6
+        20: i2d
+        21: dcmpg
+        22: iflt          47
+        25: dload_1
+        26: iload         5
+>        6: invokevirtual #358                // Method isVisible:()Z
+         9: ifeq          25
+        12: aload_0
+        13: getfield      #63                 // Field minecraft:Lnet/minecraft/client/Minecraft;
+        16: getfield      #78                 // Field net/minecraft/client/Minecraft.player:Lnet/minecraft/client/player/LocalPlayer;
+        19: invokevirtual #528                // Method net/minecraft/client/player/LocalPlayer.isSpectator:()Z
+        22: ifeq          27
+        25: iconst_0
+        26: ireturn
+        27: aload_1
+        28: invokevirtual #638                // Method net/minecraft/client/input/KeyEvent.isEscape:()Z
+        31: ifeq          48
+        34: aload_0
+        35: invokevirtual #559                // Method isOffsetNextToMainGUI:()Z
+        38: ifne          48
+        41: aload_0
+>       79: invokevirtual #650                // Method net/minecraft/client/gui/components/EditBox.isVisible:()Z
+        82: ifeq          94
+        85: aload_1
+        86: invokevirtual #638                // Method net/minecraft/client/input/KeyEvent.isEscape:()Z
+        89: ifne          94
+        92: iconst_1
+        93: ireturn
+        94: aload_0
+        95: getfield      #63                 // Field minecraft:Lnet/minecraft/client/Minecraft;
+        98: getfield      #651                // Field net/minecraft/client/Minecraft.options:Lnet/minecraft/client/Options;
+       101: getfield      #655                // Field net/minecraft/client/Options.keyChat:Lnet/minecraft/client/KeyMapping;
+       104: aload_1
+       105: invokevirtual #661                // Method net/minecraft/client/KeyMapping.matches:(Lnet/minecraft/client/input/KeyEvent;)Z
+       108: ifeq          136
+       111: aload_0
+       112: getfield      #141                // Field searchBox:Lnet/minecraft/client/gui/components/EditBox;
+>       10: invokevirtual #358                // Method isVisible:()Z
+        13: ifeq          29
+        16: aload_0
+        17: getfield      #63                 // Field minecraft:Lnet/minecraft/client/Minecraft;
+        20: getfield      #78                 // Field net/minecraft/client/Minecraft.player:Lnet/minecraft/client/player/LocalPlayer;
+        23: invokevirtual #528                // Method net/minecraft/client/player/LocalPlayer.isSpectator:()Z
+        26: ifeq          31
+        29: iconst_0
+        30: ireturn
+        31: aload_0
+        32: getfield      #141                // Field searchBox:Lnet/minecraft/client/gui/components/EditBox;
+        35: aload_1
+        36: invokevirtual #689                // Method net/minecraft/client/gui/components/EditBox.charTyped:(Lnet/minecraft/client/input/CharacterEvent;)Z
+        39: ifeq          48
+        42: aload_0
+        43: invokevirtual #647                // Method checkSearchStringUpdate:()V
+>       10: invokevirtual #358                // Method isVisible:()Z
+        13: ifeq          29
+        16: aload_0
+        17: getfield      #63                 // Field minecraft:Lnet/minecraft/client/Minecraft;
+        20: getfield      #78                 // Field net/minecraft/client/Minecraft.player:Lnet/minecraft/client/player/LocalPlayer;
+        23: invokevirtual #528                // Method net/minecraft/client/player/LocalPlayer.isSpectator:()Z
+        26: ifeq          31
+        29: iconst_0
+        30: ireturn
+        31: aload_0
+        32: getfield      #141                // Field searchBox:Lnet/minecraft/client/gui/components/EditBox;
+        35: aload_1
+        36: invokevirtual #694                // Method net/minecraft/client/gui/components/EditBox.preeditUpdated:(Lnet/minecraft/client/input/PreeditEvent;)Z
+        39: ifeq          44
+        42: iconst_1
+        43: ireturn
+>       13: invokevirtual #358                // Method isVisible:()Z
+        16: ifeq          28
+        19: aload_0
+        20: iconst_0
+        21: aload_0
+        22: invokevirtual #117                // Method isFiltering:()Z
+        25: invokevirtual #354                // Method updateCollections:(ZZ)V
+        28: return
+  
+    public void recipeShown(net.minecraft.world.item.crafting.display.RecipeDisplayId);
+      Code:
+         0: aload_0
+         1: getfield      #63                 // Field minecraft:Lnet/minecraft/client/Minecraft;
+         4: getfield      #78                 // Field net/minecraft/client/Minecraft.player:Lnet/minecraft/client/player/LocalPlayer;
+         7: aload_1
+         8: invokevirtual #733                // Method net/minecraft/client/player/LocalPlayer.removeRecipeHighlight:(Lnet/minecraft/world/item/crafting/display/RecipeDisplayId;)V

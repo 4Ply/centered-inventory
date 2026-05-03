@@ -1,0 +1,158 @@
+> public class net.minecraft.client.gui.screens.inventory.InventoryScreen extends net.minecraft.client.gui.screens.inventory.AbstractRecipeBookScreen<net.minecraft.world.inventory.InventoryMenu> {
+    public net.minecraft.client.gui.screens.inventory.InventoryScreen(net.minecraft.world.entity.player.Player);
+      Code:
+         0: aload_0
+>        5: new           #7                  // class net/minecraft/client/gui/screens/recipebook/CraftingRecipeBookComponent
+         8: dup
+         9: aload_1
+        10: getfield      #1                  // Field net/minecraft/world/entity/player/Player.inventoryMenu:Lnet/minecraft/world/inventory/InventoryMenu;
+>       13: invokespecial #9                  // Method net/minecraft/client/gui/screens/recipebook/CraftingRecipeBookComponent."<init>":(Lnet/minecraft/world/inventory/AbstractCraftingMenu;)V
+        16: aload_1
+        17: invokevirtual #13                 // Method net/minecraft/world/entity/player/Player.getInventory:()Lnet/minecraft/world/entity/player/Inventory;
+        20: ldc           #17                 // String container.crafting
+>       25: invokespecial #25                 // Method net/minecraft/client/gui/screens/inventory/AbstractRecipeBookScreen."<init>":(Lnet/minecraft/world/inventory/RecipeBookMenu;Lnet/minecraft/client/gui/screens/recipebook/RecipeBookComponent;Lnet/minecraft/world/entity/player/Inventory;Lnet/minecraft/network/chat/Component;)V
+        28: aload_0
+        29: bipush        97
+        31: putfield      #30                 // Field titleLabelX:I
+>       40: invokespecial #38                 // Method net/minecraft/client/gui/screens/inventory/EffectsInInventory."<init>":(Lnet/minecraft/client/gui/screens/inventory/AbstractContainerScreen;)V
+        43: putfield      #41                 // Field effects:Lnet/minecraft/client/gui/screens/inventory/EffectsInInventory;
+        46: return
+  
+>        1: invokespecial #45                 // Method net/minecraft/client/gui/screens/inventory/AbstractRecipeBookScreen.containerTick:()V
+         4: aload_0
+         5: getfield      #49                 // Field minecraft:Lnet/minecraft/client/Minecraft;
+         8: getfield      #53                 // Field net/minecraft/client/Minecraft.player:Lnet/minecraft/client/player/LocalPlayer;
+>       11: invokevirtual #59                 // Method net/minecraft/client/player/LocalPlayer.hasInfiniteMaterials:()Z
+        14: ifeq          70
+        17: aload_0
+        18: getfield      #49                 // Field minecraft:Lnet/minecraft/client/Minecraft;
+>       64: invokespecial #98                 // Method net/minecraft/client/gui/screens/inventory/CreativeModeInventoryScreen."<init>":(Lnet/minecraft/client/player/LocalPlayer;Lnet/minecraft/world/flag/FeatureFlagSet;Z)V
+        67: invokevirtual #101                // Method net/minecraft/client/Minecraft.setScreen:(Lnet/minecraft/client/gui/screens/Screen;)V
+        70: return
+  
+>   protected void init();
+      Code:
+         0: aload_0
+         1: getfield      #49                 // Field minecraft:Lnet/minecraft/client/Minecraft;
+>        7: invokevirtual #59                 // Method net/minecraft/client/player/LocalPlayer.hasInfiniteMaterials:()Z
+        10: ifeq          67
+        13: aload_0
+        14: getfield      #49                 // Field minecraft:Lnet/minecraft/client/Minecraft;
+>       60: invokespecial #98                 // Method net/minecraft/client/gui/screens/inventory/CreativeModeInventoryScreen."<init>":(Lnet/minecraft/client/player/LocalPlayer;Lnet/minecraft/world/flag/FeatureFlagSet;Z)V
+        63: invokevirtual #101                // Method net/minecraft/client/Minecraft.setScreen:(Lnet/minecraft/client/gui/screens/Screen;)V
+        66: return
+        67: aload_0
+>       68: invokespecial #105                // Method net/minecraft/client/gui/screens/inventory/AbstractRecipeBookScreen.init:()V
+        71: return
+  
+>   protected net.minecraft.client.gui.navigation.ScreenPosition getRecipeBookButtonPosition();
+      Code:
+         0: new           #108                // class net/minecraft/client/gui/navigation/ScreenPosition
+         3: dup
+>        5: getfield      #110                // Field leftPos:I
+         8: bipush        104
+        10: iadd
+        11: aload_0
+>       20: invokespecial #116                // Method net/minecraft/client/gui/navigation/ScreenPosition."<init>":(II)V
+        23: areturn
+  
+>   protected void onRecipeBookButtonClick();
+      Code:
+         0: aload_0
+         1: iconst_1
+>   public void extractRenderState(net.minecraft.client.gui.GuiGraphicsExtractor, int, int, float);
+      Code:
+         0: aload_0
+         1: getfield      #41                 // Field effects:Lnet/minecraft/client/gui/screens/inventory/EffectsInInventory;
+>        7: invokevirtual #143                // Method net/minecraft/client/gui/screens/inventory/EffectsInInventory.extractRenderState:(Lnet/minecraft/client/gui/GuiGraphicsExtractor;II)V
+        10: aload_0
+        11: aload_1
+        12: iload_2
+>       16: invokespecial #147                // Method net/minecraft/client/gui/screens/inventory/AbstractRecipeBookScreen.extractRenderState:(Lnet/minecraft/client/gui/GuiGraphicsExtractor;IIF)V
+        19: aload_0
+        20: iload_2
+        21: i2f
+>        6: invokespecial #160                // Method net/minecraft/client/gui/screens/inventory/AbstractRecipeBookScreen.extractBackground:(Lnet/minecraft/client/gui/GuiGraphicsExtractor;IIF)V
+         9: aload_0
+>       10: getfield      #110                // Field leftPos:I
+        13: istore        5
+        15: aload_0
+>       16: getfield      #163                // Field topPos:I
+        19: istore        6
+        21: aload_1
+>       22: getstatic     #166                // Field net/minecraft/client/renderer/RenderPipelines.GUI_TEXTURED:Lcom/mojang/blaze3d/pipeline/RenderPipeline;
+        25: getstatic     #172                // Field INVENTORY_LOCATION:Lnet/minecraft/resources/Identifier;
+        28: iload         5
+        30: iload         6
+>       48: invokevirtual #184                // Method net/minecraft/client/gui/GuiGraphicsExtractor.blit:(Lcom/mojang/blaze3d/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIFFIIII)V
+        51: aload_1
+        52: iload         5
+        54: bipush        26
+>       51: invokespecial #202                // Method org/joml/Quaternionf."<init>":()V
+        54: ldc           #206                // float 3.1415927f
+        56: invokevirtual #207                // Method org/joml/Quaternionf.rotateZ:(F)Lorg/joml/Quaternionf;
+        59: astore        14
+>       65: invokespecial #202                // Method org/joml/Quaternionf."<init>":()V
+        68: fload         13
+        70: ldc           #211                // float 20.0f
+        72: fmul
+>       91: invokestatic  #220                // Method extractRenderState:(Lnet/minecraft/world/entity/LivingEntity;)Lnet/minecraft/client/renderer/entity/state/EntityRenderState;
+        94: astore        16
+        96: aload         16
+>       98: instanceof    #223                // class net/minecraft/client/renderer/entity/state/LivingEntityRenderState
+       101: ifeq          201
+       104: aload         16
+>      106: checkcast     #223                // class net/minecraft/client/renderer/entity/state/LivingEntityRenderState
+       109: astore        17
+       111: aload         17
+       113: ldc           #225                // float 180.0f
+>      121: putfield      #226                // Field net/minecraft/client/renderer/entity/state/LivingEntityRenderState.bodyRot:F
+       124: aload         17
+       126: fload         12
+       128: ldc           #211                // float 20.0f
+>      131: putfield      #229                // Field net/minecraft/client/renderer/entity/state/LivingEntityRenderState.yRot:F
+       134: aload         17
+>      136: getfield      #232                // Field net/minecraft/client/renderer/entity/state/LivingEntityRenderState.pose:Lnet/minecraft/world/entity/Pose;
+       139: getstatic     #236                // Field net/minecraft/world/entity/Pose.FALL_FLYING:Lnet/minecraft/world/entity/Pose;
+       142: if_acmpeq     159
+       145: aload         17
+>      153: putfield      #241                // Field net/minecraft/client/renderer/entity/state/LivingEntityRenderState.xRot:F
+       156: goto          165
+       159: aload         17
+       161: fconst_0
+>      162: putfield      #241                // Field net/minecraft/client/renderer/entity/state/LivingEntityRenderState.xRot:F
+       165: aload         17
+       167: dup
+>      168: getfield      #244                // Field net/minecraft/client/renderer/entity/state/LivingEntityRenderState.boundingBoxWidth:F
+       171: aload         17
+>      173: getfield      #247                // Field net/minecraft/client/renderer/entity/state/LivingEntityRenderState.scale:F
+       176: fdiv
+>      177: putfield      #244                // Field net/minecraft/client/renderer/entity/state/LivingEntityRenderState.boundingBoxWidth:F
+       180: aload         17
+       182: dup
+>      183: getfield      #250                // Field net/minecraft/client/renderer/entity/state/LivingEntityRenderState.boundingBoxHeight:F
+       186: aload         17
+>      188: getfield      #247                // Field net/minecraft/client/renderer/entity/state/LivingEntityRenderState.scale:F
+       191: fdiv
+>      192: putfield      #250                // Field net/minecraft/client/renderer/entity/state/LivingEntityRenderState.boundingBoxHeight:F
+       195: aload         17
+       197: fconst_1
+>      198: putfield      #247                // Field net/minecraft/client/renderer/entity/state/LivingEntityRenderState.scale:F
+       201: new           #253                // class org/joml/Vector3f
+       204: dup
+       205: fconst_0
+>      208: getfield      #255                // Field net/minecraft/client/renderer/entity/state/EntityRenderState.boundingBoxHeight:F
+       211: fconst_2
+       212: fdiv
+       213: fload         6
+>      217: invokespecial #258                // Method org/joml/Vector3f."<init>":(FFF)V
+       220: astore        17
+       222: aload_0
+       223: aload         16
+>      239: invokevirtual #261                // Method net/minecraft/client/gui/GuiGraphicsExtractor.entity:(Lnet/minecraft/client/renderer/entity/state/EntityRenderState;FLorg/joml/Vector3f;Lorg/joml/Quaternionf;Lorg/joml/Quaternionf;IIII)V
+       242: return
+  
+    public boolean mouseReleased(net.minecraft.client.input.MouseButtonEvent);
+>       16: invokespecial #297                // Method net/minecraft/client/gui/screens/inventory/AbstractRecipeBookScreen.mouseReleased:(Lnet/minecraft/client/input/MouseButtonEvent;)Z
+        19: ireturn
+  }
