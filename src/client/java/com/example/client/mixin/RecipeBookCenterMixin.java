@@ -40,7 +40,7 @@ public class RecipeBookCenterMixin {
     // Reposition the recipe book when inventory is opened
     @Inject(method = "init", at = @At("TAIL"))
     private void repositionRecipeBook(int width, int height, Minecraft minecraft, boolean widthTooNarrow, CallbackInfo ci) {
-        if (!this.isVisible() || this.widthTooNarrow) return;
+        if (!this.isVisible() || widthTooNarrow) return;
         this.xOffset = this.xOffset + (RECIPE_BOOK_WIDTH + 1) / 2 - 12;
         applyWidgetOffset((RecipeBookComponent)(Object)this, (RECIPE_BOOK_WIDTH + 1) / 2 - 12);
     }
@@ -60,7 +60,7 @@ public class RecipeBookCenterMixin {
             List<net.minecraft.client.gui.components.AbstractWidget> tabs =
                 (List<net.minecraft.client.gui.components.AbstractWidget>) tabButtonsField.get(self);
             for (net.minecraft.client.gui.components.AbstractWidget tab : tabs) {
-                if (tab.getX() != 0) tab.setX(tab.getX() - delta);
+                tab.setX(tab.getX() - delta);
             }
 
             Field filterButtonField = RecipeBookComponent.class.getDeclaredField("filterButton");
@@ -85,7 +85,7 @@ public class RecipeBookCenterMixin {
             List<net.minecraft.client.gui.components.AbstractWidget> buttons =
                 (List<net.minecraft.client.gui.components.AbstractWidget>) buttonsField.get(recipeBookPage);
             for (net.minecraft.client.gui.components.AbstractWidget button : buttons) {
-                if (button.getX() != 0) button.setX(button.getX() - delta);
+                button.setX(button.getX() - delta);
             }
 
             Field forwardButtonField = pageClass.getDeclaredField("forwardButton");
@@ -102,6 +102,15 @@ public class RecipeBookCenterMixin {
 
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    // Fix the recipe book closing when pressing ESC
+    @Inject(method = "keyPressed(Lnet/minecraft/client/input/KeyEvent;)Z", at = @At("HEAD"), cancellable = true)
+    private void fixKeyPressed(net.minecraft.client.input.KeyEvent event, CallbackInfoReturnable<Boolean> cir) {
+        if (event.key() == 256) { // GLFW_KEY_ESCAPE
+            cir.setReturnValue(false);
+            cir.cancel();
         }
     }
 }
