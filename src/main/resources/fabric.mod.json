@@ -3,7 +3,7 @@
 	"id": "centered_inventory",
 	"version": "${version}",
 	"name": "Centered Inventory",
-	"description": "Centers the player inventory screen and recipe book layout for Minecraft 1.26.1.",
+	"description": "Centers the player inventory screen and recipe book layout for Minecraft 26.1.X",
 	"authors": [
 		"Me!"
 	],
@@ -31,7 +31,7 @@
 	],
 	"depends": {
 		"fabricloader": ">=0.19.2",
-		"minecraft": "~26.1.1",
+		"minecraft": "~26.1",
 		"java": ">=25",
 		"fabric-api": "*"
 	}
