@@ -11,6 +11,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.lang.reflect.Field;
 
+import java.util.List;
+
 @Mixin(RecipeBookComponent.class)
 public class RecipeBookCenterMixin {
     private static final int RECIPE_BOOK_WIDTH = 177;
@@ -47,5 +49,58 @@ public class RecipeBookCenterMixin {
     private void onSetVisible(boolean visible, CallbackInfo ci) {
         if (!visible || this.widthTooNarrow) return;
         this.xOffset = 86 + (RECIPE_BOOK_WIDTH + 1) / 2 - 12;
+
+        int delta = (RECIPE_BOOK_WIDTH + 1) / 2 - 12;
+
+        RecipeBookComponent self = (RecipeBookComponent)(Object)this;
+        try {
+            Field tabButtonsField = RecipeBookComponent.class.getDeclaredField("tabButtons");
+            tabButtonsField.setAccessible(true);
+            List<net.minecraft.client.gui.components.AbstractWidget> tabs =
+                (List<net.minecraft.client.gui.components.AbstractWidget>) tabButtonsField.get(self);
+            for (net.minecraft.client.gui.components.AbstractWidget tab : tabs) {
+                if (tab.getX() != 0) tab.setX(tab.getX() - delta);
+            }
+
+            Field filterButtonField = RecipeBookComponent.class.getDeclaredField("filterButton");
+            filterButtonField.setAccessible(true);
+            net.minecraft.client.gui.components.AbstractWidget filterBtn =
+                (net.minecraft.client.gui.components.AbstractWidget) filterButtonField.get(self);
+            filterBtn.setX(filterBtn.getX() - delta);
+
+            Field searchBoxField = RecipeBookComponent.class.getDeclaredField("searchBox");
+            searchBoxField.setAccessible(true);
+            net.minecraft.client.gui.components.AbstractWidget searchBox =
+                (net.minecraft.client.gui.components.AbstractWidget) searchBoxField.get(self);
+            searchBox.setX(searchBox.getX() - delta);
+
+            Field recipeBookPageField = RecipeBookComponent.class.getDeclaredField("recipeBookPage");
+            recipeBookPageField.setAccessible(true);
+            Object recipeBookPage = recipeBookPageField.get(self);
+            Class<?> pageClass = recipeBookPage.getClass();
+                    
+            Field buttonsField = pageClass.getDeclaredField("buttons");
+            buttonsField.setAccessible(true);
+            List<net.minecraft.client.gui.components.AbstractWidget> buttons =
+                (List<net.minecraft.client.gui.components.AbstractWidget>) buttonsField.get(recipeBookPage);
+            for (net.minecraft.client.gui.components.AbstractWidget button : buttons) {
+                if (button.getX() != 0) button.setX(button.getX() - delta);
+            }
+            
+            Field forwardButtonField = pageClass.getDeclaredField("forwardButton");
+            forwardButtonField.setAccessible(true);
+            net.minecraft.client.gui.components.AbstractWidget forwardButton =
+                (net.minecraft.client.gui.components.AbstractWidget) forwardButtonField.get(recipeBookPage);
+            forwardButton.setX(forwardButton.getX() - delta);
+            
+            Field backButtonField = pageClass.getDeclaredField("backButton");
+            backButtonField.setAccessible(true);
+            net.minecraft.client.gui.components.AbstractWidget backButton =
+                (net.minecraft.client.gui.components.AbstractWidget) backButtonField.get(recipeBookPage);
+            backButton.setX(backButton.getX() - delta);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
