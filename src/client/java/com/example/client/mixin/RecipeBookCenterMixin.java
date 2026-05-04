@@ -113,4 +113,25 @@ public class RecipeBookCenterMixin {
             cir.cancel();
         }
     }
+
+    // Prevent the recipe book from closing when clicking recipes
+
+    private boolean isHandlingMouseClick = false;
+
+    @Inject(method = "mouseClicked(Lnet/minecraft/client/input/MouseButtonEvent;Z)Z", at = @At("HEAD"))
+    private void beforeMouseClicked(net.minecraft.client.input.MouseButtonEvent event, boolean bl, CallbackInfoReturnable<Boolean> cir) {
+        isHandlingMouseClick = true;
+    }
+
+    @Inject(method = "mouseClicked(Lnet/minecraft/client/input/MouseButtonEvent;Z)Z", at = @At("RETURN"))
+    private void afterMouseClicked(net.minecraft.client.input.MouseButtonEvent event, boolean bl, CallbackInfoReturnable<Boolean> cir) {
+        isHandlingMouseClick = false;
+    }
+
+    @Inject(method = "setVisible(Z)V", at = @At("HEAD"), cancellable = true)
+    private void guardSetVisible(boolean visible, CallbackInfo ci) {
+        if (!visible && isHandlingMouseClick) {
+            ci.cancel();
+        }
+    }
 }
