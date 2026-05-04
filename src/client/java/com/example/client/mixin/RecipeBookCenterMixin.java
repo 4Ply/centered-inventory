@@ -37,22 +37,23 @@ public class RecipeBookCenterMixin {
         }
     }
 
-    // Reposition the recipe book's background when inventory is opened
+    // Reposition the recipe book when inventory is opened
     @Inject(method = "init", at = @At("TAIL"))
     private void repositionRecipeBook(int width, int height, Minecraft minecraft, boolean widthTooNarrow, CallbackInfo ci) {
         if (!this.isVisible() || this.widthTooNarrow) return;
         this.xOffset = this.xOffset + (RECIPE_BOOK_WIDTH + 1) / 2 - 12;
+        applyWidgetOffset((RecipeBookComponent)(Object)this, (RECIPE_BOOK_WIDTH + 1) / 2 - 12);
     }
-
-    // Reposition the recipe book's background when toggling recipe book visibility
+    
+    // Reposition the recipe book when toggling recipe book visibility
     @Inject(method = "setVisible(Z)V", at = @At("TAIL"))
     private void onSetVisible(boolean visible, CallbackInfo ci) {
         if (!visible || this.widthTooNarrow) return;
         this.xOffset = 86 + (RECIPE_BOOK_WIDTH + 1) / 2 - 12;
+        applyWidgetOffset((RecipeBookComponent)(Object)this, (RECIPE_BOOK_WIDTH + 1) / 2 - 12);
+    }
 
-        int delta = (RECIPE_BOOK_WIDTH + 1) / 2 - 12;
-
-        RecipeBookComponent self = (RecipeBookComponent)(Object)this;
+    private void applyWidgetOffset(RecipeBookComponent self, int delta) {
         try {
             Field tabButtonsField = RecipeBookComponent.class.getDeclaredField("tabButtons");
             tabButtonsField.setAccessible(true);
@@ -78,7 +79,7 @@ public class RecipeBookCenterMixin {
             recipeBookPageField.setAccessible(true);
             Object recipeBookPage = recipeBookPageField.get(self);
             Class<?> pageClass = recipeBookPage.getClass();
-                    
+
             Field buttonsField = pageClass.getDeclaredField("buttons");
             buttonsField.setAccessible(true);
             List<net.minecraft.client.gui.components.AbstractWidget> buttons =
@@ -86,13 +87,13 @@ public class RecipeBookCenterMixin {
             for (net.minecraft.client.gui.components.AbstractWidget button : buttons) {
                 if (button.getX() != 0) button.setX(button.getX() - delta);
             }
-            
+
             Field forwardButtonField = pageClass.getDeclaredField("forwardButton");
             forwardButtonField.setAccessible(true);
             net.minecraft.client.gui.components.AbstractWidget forwardButton =
                 (net.minecraft.client.gui.components.AbstractWidget) forwardButtonField.get(recipeBookPage);
             forwardButton.setX(forwardButton.getX() - delta);
-            
+
             Field backButtonField = pageClass.getDeclaredField("backButton");
             backButtonField.setAccessible(true);
             net.minecraft.client.gui.components.AbstractWidget backButton =
