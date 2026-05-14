@@ -1,9 +1,10 @@
 {
 	"required": true,
-	"package": "com.example.client.mixin",
-	"compatibilityLevel": "JAVA_25",
+	"package": "io.github.centeredinventory.mixin",
+	"compatibilityLevel": "JAVA_21",
 	"client": [
-		"RecipeBookCenterMixin"
+		"RecipeBookCenterMixin",
+		"RecipeBookPageAccessor"
 	],
 	"injectors": {
 		"defaultRequire": 1
